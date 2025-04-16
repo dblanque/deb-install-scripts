@@ -36,7 +36,7 @@ if [ $? -eq 0 ]; then
     # set correct ownership and permissions
     chown root:root /usr/bin/bitwarden
     chmod 755 /usr/bin/bitwarden
-    echo "${LIGHTGREEN}Done.${NC}"
+    echo -e "${LIGHTGREEN}Done.${NC}"
 else
     echo -e "${LIGHTRED}Could not set correct permissions to /usr/bin/bitwarden${NC}"
     echo -e "${LIGHTRED}Check them manually if you cannot open the program.${NC}"
