@@ -15,7 +15,7 @@ if ! [ $(id -u) = 0 ]; then
         echo "Error: root privileges required"
         exit 1
     fi
-    sudo bash $0 "1"
+    sudo bash $0
     exit $?
 fi
 
