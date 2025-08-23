@@ -8,6 +8,7 @@ LIGHTRED='\033[1;31m'
 NC='\033[0m'
 
 url_discord="https://discordapp.com/api/download/stable?platform=linux&format=deb"
+deb_name="/tmp/discord-installer.deb"
 
 ### ensure script is run as root/sudo
 if ! [ $(id -u) = 0 ]; then
@@ -22,16 +23,19 @@ fi
 
 ### download and install as root
 echo -e "${LIGHTBLUE}Downloading latest Discord version.${NC}"
-wget -O /tmp/discord-installer.deb $url_discord
+wget -O "$deb_name" $url_discord
 
 if [ $? -eq 0 ]; then
     echo -e "${LIGHTBLUE}Installing discord.${NC}"
-    dpkg -i /tmp/discord-installer.deb
-    echo -e "${LIGHTGREEN}Done.${NC}"
+    dpkg -i "$deb_name"
 else
     echo -e "${LIGHTRED}Could not install discord, script finished with errors."
     exit 1
 fi
+
+echo -e "${LIGHTBLUE}Removing temporary Discord deb package ($deb_name).${NC}"
+rm $deb_name || echo "${LIGHTRED}Could not remove tmp package, you may delete it manually.${NC}"
+echo -e "${LIGHTGREEN}Done.${NC}"
 
 # Only show this if no errors, otherwise I can't bear the shame.
 echo "Please star the repo if it was useful for you!"
