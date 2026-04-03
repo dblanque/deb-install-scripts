@@ -16,7 +16,7 @@ bin_target="/usr/bin/bitwarden"
 
 # For KDE Launcher
 url_logo="$url_repo/img.d/logo_bitwarden.png"
-url_launcher_app="$url_repo/img.d/bitwarden.desktop"
+url_launcher_app="$url_repo/launcher.d/bitwarden.desktop"
 share_bw_dir="/usr/share/bitwarden"
 share_apps_dir="/usr/share/applications"
 
