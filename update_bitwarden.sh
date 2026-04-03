@@ -30,7 +30,7 @@ if ! [ "$(id -u)" = 0 ]; then
     exit $?
 fi
 
-if pgrep bitwarden; then
+if pgrep "Bitwarden" || pgrep "bitwarden"; then
     echo -e "${LIGHTRED}Please close Bitwarden to update it.${NC}"
 fi
 
