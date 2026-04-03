@@ -30,6 +30,10 @@ if ! [ "$(id -u)" = 0 ]; then
     exit $?
 fi
 
+if ! pgrep bitwarden; then
+    echo -e "${LIGHTRED}Please close Bitwarden to update it.${NC}"
+fi
+
 ### download bitwarden and install as root for all users
 echo -e "${LIGHTBLUE}Downloading latest Bitwarden version...${NC}"
 if [ ! -f "$tmp_name" ]; then
