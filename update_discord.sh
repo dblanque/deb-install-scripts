@@ -11,27 +11,27 @@ url_discord="https://discordapp.com/api/download/stable?platform=linux&format=de
 deb_name="/tmp/discord-installer.deb"
 
 ### ensure script is run as root/sudo
-if ! [ $(id -u) = 0 ]; then
+if ! [ "$(id -u)" = 0 ]; then
     if [ "$1" ]; then
-        echo "Error: root privileges required"
+        echo -e "${LIGHTRED}Error: root privileges required${NC}"
         exit 1
     fi
-    sudo bash $0
+    sudo bash "$0"
     exit $?
 fi
 
-
 ### download and install as root
 echo -e "${LIGHTBLUE}Downloading latest Discord version.${NC}"
-wget -O "$deb_name" $url_discord
+wget -O "$deb_name" "$url_discord" || {
+    echo -e "${LIGHTRED}Could not download discord, script finished with errors.";
+    exit 1;
+}
 
-if [ $? -eq 0 ]; then
-    echo -e "${LIGHTBLUE}Installing discord.${NC}"
-    dpkg -i "$deb_name"
-else
-    echo -e "${LIGHTRED}Could not install discord, script finished with errors."
-    exit 1
-fi
+echo -e "${LIGHTBLUE}Installing discord.${NC}"
+dpkg -i "$deb_name" || {
+    echo -e "${LIGHTRED}Could not install discord, script finished with errors.";
+    exit 1;
+}
 
 echo -e "${LIGHTBLUE}Removing temporary Discord deb package ($deb_name).${NC}"
 rm $deb_name || echo "${LIGHTRED}Could not remove tmp package, you may delete it manually.${NC}"
