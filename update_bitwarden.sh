@@ -30,7 +30,7 @@ if ! [ "$(id -u)" = 0 ]; then
     exit $?
 fi
 
-if pgrep -i "bitwarden" > /dev/null; then
+if [ $(pgrep -c -i "bitwarden") -ge 1 ]; then
     echo -e "${LIGHTRED}Please close Bitwarden to update it${NC}"
     exit 1
 fi
