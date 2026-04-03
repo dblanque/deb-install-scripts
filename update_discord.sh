@@ -20,7 +20,7 @@ if ! [ "$(id -u)" = 0 ]; then
     exit $?
 fi
 
-if pgrep "Discord" || pgrep discord; then
+if pgrep -i "discord" > /dev/null; then
     echo -e "${LIGHTRED}Please close Discord to update it.${NC}"
     exit 1
 fi
