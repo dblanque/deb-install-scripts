@@ -31,7 +31,7 @@ if ! [ "$(id -u)" = 0 ]; then
 fi
 
 if pgrep -i "bitwarden" > /dev/null; then
-    echo -e "${LIGHTRED}Please close Bitwarden to update it.${NC}"
+    echo -e "${LIGHTRED}Please close Bitwarden to update it${NC}"
     exit 1
 fi
 
@@ -39,16 +39,16 @@ fi
 echo -e "${LIGHTBLUE}Downloading latest Bitwarden version...${NC}"
 if [ ! -f "$tmp_name" ]; then
     wget -O "$tmp_name" "$url_bitwarden" || {
-        echo -e "${LIGHTRED}Could not download Bitwarden AppImage.${NC}";
+        echo -e "${LIGHTRED}Could not download Bitwarden AppImage${NC}";
         exit 1;
     }
 else
-    echo -e "${LIGHTYELL}$tmp_name file already exists, re-utilizing from supposedly previously failed installation.${NC}"
+    echo -e "${LIGHTYELL}$tmp_name file already exists, re-utilizing from supposedly previously failed installation${NC}"
 fi
 
 echo -e "${LIGHTBLUE}Installing AppImage into $bin_target${NC}"
 cp "$tmp_name" "$bin_target" || {
-    echo -e "${LIGHTRED}Could not install Bitwarden AppImage.${NC}";
+    echo -e "${LIGHTRED}Could not install Bitwarden AppImage${NC}";
     exit 1;
 }
 
@@ -56,10 +56,10 @@ cp "$tmp_name" "$bin_target" || {
     # set correct ownership and permissions
     chown root:root "$bin_target" &&
     chmod 755 "$bin_target" &&
-    echo -e "${LIGHTGREEN}Done.${NC}";
+    echo -e "${LIGHTGREEN}Done${NC}";
 } || {
     echo -e "${LIGHTRED}Could not set correct permissions to $bin_target${NC}";
-    echo -e "${LIGHTRED}Check them manually if you cannot open the program.${NC}";
+    echo -e "${LIGHTRED}Check them manually if you cannot open the program${NC}";
     exit 1;
 }
 
@@ -93,7 +93,7 @@ fi
 {
     rm "$tmp_name" &&
     echo -e "${LIGHTBLUE}Removed temporary download file $tmp_name${NC}";
-} || echo -e "${LIGHTYELL}Could not remove $tmp_name, you may do so manually.${NC}"
+} || echo -e "${LIGHTYELL}Could not remove $tmp_name, you may do so manually${NC}"
 
 # Only show this if no errors, otherwise I can't bear the shame.
 echo -e "${LIGHTGREEN}Please star the repo if it was useful for you!${NC}"

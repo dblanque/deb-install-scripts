@@ -4,7 +4,7 @@
 
 ### ensure script is NOT run as root/sudo
 if [ "$(id -u)" = 0 ]; then
-	echo -e "${LIGHTRED}Error: This script should not be run as sudo.${NC}"
+	echo -e "${LIGHTRED}Error: This script should not be run as sudo${NC}"
 	exit 1
 fi
 

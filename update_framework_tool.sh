@@ -28,7 +28,7 @@ wget -O "/tmp/$bin_name" "$url_fwtool"
 
 echo -e "${LIGHTBLUE}Installing Framework Tool into $bin_name${NC}"
 mv "/tmp/$bin_name" "$bin_target" || {
-    echo -e "${LIGHTRED}Could not download Framework Tool.${NC}";
+    echo -e "${LIGHTRED}Could not download Framework Tool${NC}";
     exit 1;
 }
 
@@ -36,10 +36,10 @@ mv "/tmp/$bin_name" "$bin_target" || {
     # set correct ownership and permissions
     chown root:root "$bin_target" &&
     chmod 755 "$bin_target" &&
-    echo -e "${LIGHTGREEN}Done.${NC}";
+    echo -e "${LIGHTGREEN}Done${NC}";
 } || {
     echo -e "${LIGHTRED}Could not set correct permissions to $bin_target${NC}";
-    echo -e "${LIGHTRED}Check them manually if you cannot open the program.${NC}";
+    echo -e "${LIGHTRED}Check them manually if you cannot open the program${NC}";
     exit 1;
 }
 

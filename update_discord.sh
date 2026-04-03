@@ -21,26 +21,26 @@ if ! [ "$(id -u)" = 0 ]; then
 fi
 
 if pgrep -i "discord" > /dev/null; then
-    echo -e "${LIGHTRED}Please close Discord to update it.${NC}"
+    echo -e "${LIGHTRED}Please close Discord to update it${NC}"
     exit 1
 fi
 
 ### download and install as root
-echo -e "${LIGHTBLUE}Downloading latest Discord version.${NC}"
+echo -e "${LIGHTBLUE}Downloading latest Discord version${NC}"
 wget -O "$deb_name" "$url_discord" || {
     echo -e "${LIGHTRED}Could not download discord, script finished with errors.";
     exit 1;
 }
 
-echo -e "${LIGHTBLUE}Installing discord.${NC}"
+echo -e "${LIGHTBLUE}Installing discord${NC}"
 dpkg -i "$deb_name" || {
     echo -e "${LIGHTRED}Could not install discord, script finished with errors.";
     exit 1;
 }
 
-echo -e "${LIGHTBLUE}Removing temporary Discord deb package ($deb_name).${NC}"
-rm $deb_name || echo "${LIGHTRED}Could not remove tmp package, you may delete it manually.${NC}"
-echo -e "${LIGHTGREEN}Done.${NC}"
+echo -e "${LIGHTBLUE}Removing temporary Discord deb package ($deb_name)${NC}"
+rm $deb_name || echo "${LIGHTRED}Could not remove tmp package, you may delete it manually${NC}"
+echo -e "${LIGHTGREEN}Done${NC}"
 
 # Only show this if no errors, otherwise I can't bear the shame.
 echo "Please star the repo if it was useful for you!"
