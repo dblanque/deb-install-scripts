@@ -66,18 +66,20 @@ if [ -d "/usr/share/applications" ]; then
             mkdir -p "$share_bw_dir"
         fi
         wget -O "$share_bw_dir/logo.png" "$url_logo" &&
-        chmod 444 "$share_bw_dir/logo.png";
+        chmod 444 "$share_bw_dir/logo.png" &&
+        echo -e "${LIGHTBLUE}Installed Bitwarden logo to $share_bw_dir/logo.png${NC}";
     } || {
-        echo -e "${LIGHTBLUE}Could not download Bitwarden Logo${NC}";
-        echo -e "${LIGHTBLUE}You may download it manually from $url_logo and copy it to $share_bw_dir${NC}";
+        echo -e "${LIGHTYELL}Could not download Bitwarden Logo${NC}";
+        echo -e "${LIGHTYELL}You may download it manually from $url_logo and copy it to $share_bw_dir${NC}";
     }
 
     {
         wget -O "$share_apps_dir/bitwarden.desktop" "$url_launcher_app" &&
-        chmod 444 "$share_apps_dir/bitwarden.desktop";
+        chmod 444 "$share_apps_dir/bitwarden.desktop" &&
+        echo -e "${LIGHTBLUE}Installed Bitwarden Launcher Application Template to $share_apps_dir/bitwarden.desktop${NC}";
     } || {
-        echo -e "${LIGHTBLUE}Could not download Bitwarden Launcher Application Template${NC}";
-        echo -e "${LIGHTBLUE}You may download it manually from $url_launcher_app and copy it to $share_apps_dir${NC}";
+        echo -e "${LIGHTRED}Could not download Bitwarden Launcher Application Template${NC}";
+        echo -e "${LIGHTYELL}You may download it manually from $url_launcher_app and copy it to $share_apps_dir${NC}";
         exit 1
     }
 fi
