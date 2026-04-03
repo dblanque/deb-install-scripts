@@ -20,6 +20,10 @@ if ! [ "$(id -u)" = 0 ]; then
     exit $?
 fi
 
+if pgrep "Discord" || pgrep discord; then
+    echo -e "${LIGHTRED}Please close Discord to update it.${NC}"
+fi
+
 ### download and install as root
 echo -e "${LIGHTBLUE}Downloading latest Discord version.${NC}"
 wget -O "$deb_name" "$url_discord" || {
