@@ -32,6 +32,7 @@ fi
 
 if pgrep "Bitwarden" || pgrep "bitwarden"; then
     echo -e "${LIGHTRED}Please close Bitwarden to update it.${NC}"
+    exit 1
 fi
 
 ### download bitwarden and install as root for all users

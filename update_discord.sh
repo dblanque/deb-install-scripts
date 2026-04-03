@@ -22,6 +22,7 @@ fi
 
 if pgrep "Discord" || pgrep discord; then
     echo -e "${LIGHTRED}Please close Discord to update it.${NC}"
+    exit 1
 fi
 
 ### download and install as root
