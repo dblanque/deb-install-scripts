@@ -1,8 +1,8 @@
 # Debian Install Scripts
 
 Just a mini-repo with some useful installation scripts for:
-* Bitwarden
 
+* Bitwarden
 ```bash
 wget https://raw.githubusercontent.com/dblanque/deb-install-scripts/refs/heads/main/update_bitwarden.sh
 chmod +x ./update_bitwarden.sh
@@ -10,7 +10,6 @@ chmod +x ./update_bitwarden.sh
 ```
 
 * Discord
-
 ```bash
 wget https://raw.githubusercontent.com/dblanque/deb-install-scripts/refs/heads/main/update_discord.sh
 chmod +x ./update_discord.sh
@@ -18,7 +17,6 @@ chmod +x ./update_discord.sh
 ```
 
 * Zen Browser (it really just uses the official one checking you're not root)
-
 ```bash
 wget https://raw.githubusercontent.com/dblanque/deb-install-scripts/refs/heads/main/update_zen.sh
 chmod +x ./update_zen.sh
@@ -26,7 +24,6 @@ chmod +x ./update_zen.sh
 ```
 
 * Mozilla Firefox from APT Repository
-
 ```bash
 wget https://raw.githubusercontent.com/dblanque/deb-install-scripts/refs/heads/main/install_firefox_repo.sh
 chmod +x ./install_firefox_repo.sh
