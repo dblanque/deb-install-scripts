@@ -85,8 +85,10 @@ if [ -d "/usr/share/applications" ]; then
 fi
 
 # If all is ok, remove file from /tmp
-rm "$tmp_name" || \
-    echo -e "${LIGHTYELL}Could not remove $tmp_name, you may do so manually.${NC}"
+{
+    rm "$tmp_name" &&
+    echo -e "${LIGHTBLUE}Removed temporary download file $tmp_name${NC}";
+} || echo -e "${LIGHTYELL}Could not remove $tmp_name, you may do so manually.${NC}"
 
 # Only show this if no errors, otherwise I can't bear the shame.
-echo "Please star the repo if it was useful for you!"
+echo -e "${LIGHTGREEN}Please star the repo if it was useful for you!${NC}"
