@@ -7,11 +7,18 @@ LIGHTBLUE='\033[0;34m'
 LIGHTRED='\033[1;31m'
 NC='\033[0m'
 
+# vars init
 url_bitwarden="https://vault.bitwarden.com/download/?app=desktop&platform=linux"
 url_repo="https://raw.githubusercontent.com/dblanque/deb-install-scripts/refs/heads/main"
 appimage_name="bitwarden.AppImage"
 tmp_name="/tmp/$appimage_name"
 bin_target="/usr/bin/bitwarden"
+
+# For KDE Launcher
+url_logo="$url_repo/img.d/logo_bitwarden.png"
+url_launcher_app="$url_repo/img.d/bitwarden.desktop"
+share_bw_dir="/usr/share/bitwarden"
+share_apps_dir="/usr/share/applications"
 
 ### ensure script is run as root/sudo
 if ! [ "$(id -u)" = 0 ]; then
@@ -25,13 +32,17 @@ fi
 
 ### download bitwarden and install as root for all users
 echo -e "${LIGHTBLUE}Downloading latest Bitwarden version...${NC}"
-wget -O "$tmp_name" "$url_bitwarden" || {
-    echo -e "${LIGHTRED}Could not download Bitwarden AppImage.${NC}";
-    exit 1;
-}
+if [ ! -f "$tmp_name" ]; then
+    wget -O "$tmp_name" "$url_bitwarden" || {
+        echo -e "${LIGHTRED}Could not download Bitwarden AppImage.${NC}";
+        exit 1;
+    }
+else
+    echo -e "${LIGHTYELL}$tmp_name file already exists, re-utilizing from supposedly previously failed installation.${NC}"
+fi
 
 echo -e "${LIGHTBLUE}Installing AppImage into $bin_target${NC}"
-mv "$tmp_name" "$bin_target" || {
+cp "$tmp_name" "$bin_target" || {
     echo -e "${LIGHTRED}Could not install Bitwarden AppImage.${NC}";
     exit 1;
 }
@@ -49,10 +60,6 @@ mv "$tmp_name" "$bin_target" || {
 
 # Add KDE Launcher Application
 if [ -d "/usr/share/applications" ]; then
-    url_logo="$url_repo/img.d/logo_bitwarden.png"
-    url_launcher_app="$url_repo/img.d/bitwarden.desktop"
-    share_bw_dir="/usr/share/bitwarden"
-    share_apps_dir="/usr/share/applications"
     # Download Bitwarden logo
     {
         if [ ! -d "$share_bw_dir" ]; then
@@ -71,8 +78,13 @@ if [ -d "/usr/share/applications" ]; then
     } || {
         echo -e "${LIGHTBLUE}Could not download Bitwarden Launcher Application Template${NC}";
         echo -e "${LIGHTBLUE}You may download it manually from $url_launcher_app and copy it to $share_apps_dir${NC}";
+        exit 1
     }
 fi
+
+# If all is ok, remove file from /tmp
+rm "$tmp_name" || \
+    echo -e "${LIGHTYELL}Could not remove $tmp_name, you may do so manually.${NC}"
 
 # Only show this if no errors, otherwise I can't bear the shame.
 echo "Please star the repo if it was useful for you!"
