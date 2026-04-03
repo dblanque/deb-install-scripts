@@ -8,6 +8,7 @@ LIGHTRED='\033[1;31m'
 NC='\033[0m'
 
 url_bitwarden="https://vault.bitwarden.com/download/?app=desktop&platform=linux"
+url_repo="https://raw.githubusercontent.com/dblanque/deb-install-scripts/refs/heads/main"
 appimage_name="bitwarden.AppImage"
 tmp_name="/tmp/$appimage_name"
 bin_target="/usr/bin/bitwarden"
@@ -45,6 +46,33 @@ mv "$tmp_name" "$bin_target" || {
     echo -e "${LIGHTRED}Check them manually if you cannot open the program.${NC}";
     exit 1;
 }
+
+# Add KDE Launcher Application
+if [ -d "/usr/share/applications" ]; then
+    logo_url="$repo_url/img.d/logo_bitwarden.png"
+    desktop_application_url="$repo_url/img.d/bitwarden.desktop"
+    share_bw_dir="/usr/share/bitwarden"
+    share_apps_dir="/usr/share/applications"
+    # Download Bitwarden logo
+    {
+        if [ ! -d "$share_bw_dir" ]; then
+            mkdir -p "$share_bw_dir"
+        fi
+        wget -O "$share_bw_dir/logo.png" "$logo_url" &&
+        chmod 444 "$share_bw_dir/logo.png";
+    } || {
+        echo -e "${LIGHTBLUE}Could not download Bitwarden Logo${NC}";
+        echo -e "${LIGHTBLUE}You may download it manually from $logo_url and copy it to $share_bw_dir${NC}";
+    }
+
+    {
+        wget -O "$share_apps_dir/bitwarden.desktop" "$desktop_application_url" &&
+        chmod 444 "$share_apps_dir/bitwarden.desktop";
+    } || {
+        echo -e "${LIGHTBLUE}Could not download Bitwarden Launcher Application Template${NC}";
+        echo -e "${LIGHTBLUE}You may download it manually from $desktop_application_url and copy it to $share_apps_dir${NC}";
+    }
+fi
 
 # Only show this if no errors, otherwise I can't bear the shame.
 echo "Please star the repo if it was useful for you!"
