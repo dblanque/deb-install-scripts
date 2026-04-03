@@ -49,8 +49,8 @@ mv "$tmp_name" "$bin_target" || {
 
 # Add KDE Launcher Application
 if [ -d "/usr/share/applications" ]; then
-    logo_url="$repo_url/img.d/logo_bitwarden.png"
-    desktop_application_url="$repo_url/img.d/bitwarden.desktop"
+    url_logo="$url_repo/img.d/logo_bitwarden.png"
+    url_launcher_app="$url_repo/img.d/bitwarden.desktop"
     share_bw_dir="/usr/share/bitwarden"
     share_apps_dir="/usr/share/applications"
     # Download Bitwarden logo
@@ -58,19 +58,19 @@ if [ -d "/usr/share/applications" ]; then
         if [ ! -d "$share_bw_dir" ]; then
             mkdir -p "$share_bw_dir"
         fi
-        wget -O "$share_bw_dir/logo.png" "$logo_url" &&
+        wget -O "$share_bw_dir/logo.png" "$url_logo" &&
         chmod 444 "$share_bw_dir/logo.png";
     } || {
         echo -e "${LIGHTBLUE}Could not download Bitwarden Logo${NC}";
-        echo -e "${LIGHTBLUE}You may download it manually from $logo_url and copy it to $share_bw_dir${NC}";
+        echo -e "${LIGHTBLUE}You may download it manually from $url_logo and copy it to $share_bw_dir${NC}";
     }
 
     {
-        wget -O "$share_apps_dir/bitwarden.desktop" "$desktop_application_url" &&
+        wget -O "$share_apps_dir/bitwarden.desktop" "$url_launcher_app" &&
         chmod 444 "$share_apps_dir/bitwarden.desktop";
     } || {
         echo -e "${LIGHTBLUE}Could not download Bitwarden Launcher Application Template${NC}";
-        echo -e "${LIGHTBLUE}You may download it manually from $desktop_application_url and copy it to $share_apps_dir${NC}";
+        echo -e "${LIGHTBLUE}You may download it manually from $url_launcher_app and copy it to $share_apps_dir${NC}";
     }
 fi
 
