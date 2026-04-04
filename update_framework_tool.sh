@@ -5,16 +5,30 @@
 LIGHTGREEN='\033[0;32m'
 LIGHTBLUE='\033[0;34m'
 LIGHTRED='\033[1;31m'
+LIGHTYELLOW='\033[1;33m'
 NC='\033[0m'
 
 url_fwtool="https://github.com/FrameworkComputer/framework-system/releases/latest/download/framework_tool"
 bin_name="framework_tool"
 bin_target="/usr/bin/framework-tool"
 
+function print_info() {
+    echo -e "${LIGHTBLUE}$1${NC}"
+}
+function print_error() {
+    echo -e "${LIGHTRED}$1${NC}"
+}
+function print_ok() {
+    echo -e "${LIGHTGREEN}$1${NC}"
+}
+function print_warning() {
+    echo -e "${LIGHTYELLOW}$1${NC}"
+}
+
 ### ensure script is run as root/sudo
 if ! [ "$(id -u)" = 0 ]; then
     if [ "$1" ]; then
-        echo -e "${LIGHTRED}Error: root privileges required${NC}"
+        print_error "Error: root privileges required"
         exit 1
     fi
     sudo bash "$0"
@@ -23,12 +37,12 @@ fi
 
 
 ### download bitwarden and install as root for all users
-echo -e "${LIGHTBLUE}Downloading latest Framework Tool version...${NC}"
+print_info "Downloading latest Framework Tool version..."
 wget -O "/tmp/$bin_name" "$url_fwtool"
 
-echo -e "${LIGHTBLUE}Installing Framework Tool into $bin_name${NC}"
+print_info "Installing Framework Tool into $bin_name"
 mv "/tmp/$bin_name" "$bin_target" || {
-    echo -e "${LIGHTRED}Could not download Framework Tool${NC}";
+    print_error "Could not download Framework Tool";
     exit 1;
 }
 
@@ -36,10 +50,10 @@ mv "/tmp/$bin_name" "$bin_target" || {
     # set correct ownership and permissions
     chown root:root "$bin_target" &&
     chmod 755 "$bin_target" &&
-    echo -e "${LIGHTGREEN}Done${NC}";
+    print_ok "Done";
 } || {
-    echo -e "${LIGHTRED}Could not set correct permissions to $bin_target${NC}";
-    echo -e "${LIGHTRED}Check them manually if you cannot open the program${NC}";
+    print_error "Could not set correct permissions to $bin_target";
+    print_error "Check them manually if you cannot open the program";
     exit 1;
 }
 

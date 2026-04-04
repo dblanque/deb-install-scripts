@@ -5,6 +5,7 @@
 LIGHTGREEN='\033[0;32m'
 LIGHTBLUE='\033[0;34m'
 LIGHTRED='\033[1;31m'
+LIGHTYELLOW='\033[1;33m'
 NC='\033[0m'
 
 # vars init
@@ -20,10 +21,23 @@ url_launcher_app="$url_repo/launcher.d/bitwarden.desktop"
 share_bw_dir="/usr/share/bitwarden"
 share_apps_dir="/usr/share/applications"
 
+function print_info() {
+    echo -e "${LIGHTBLUE}$1${NC}"
+}
+function print_error() {
+    echo -e "${LIGHTRED}$1${NC}"
+}
+function print_ok() {
+    echo -e "${LIGHTGREEN}$1${NC}"
+}
+function print_warning() {
+    echo -e "${LIGHTYELLOW}$1${NC}"
+}
+
 ### ensure script is run as root/sudo
 if ! [ "$(id -u)" = 0 ]; then
     if [ "$1" ]; then
-        echo -e "${LIGHTRED}Error: root privileges required${NC}"
+        print_error "Error: root privileges required"
         exit 1
     fi
     sudo bash "$0"
@@ -31,24 +45,24 @@ if ! [ "$(id -u)" = 0 ]; then
 fi
 
 if [ $(pgrep -c -i "^bitwarden") -ge 1 ]; then
-    echo -e "${LIGHTRED}Please close Bitwarden to update it${NC}"
+    print_error "Please close Bitwarden to update it"
     exit 1
 fi
 
 ### download bitwarden and install as root for all users
-echo -e "${LIGHTBLUE}Downloading latest Bitwarden version...${NC}"
+print_info "Downloading latest Bitwarden version..."
 if [ ! -f "$tmp_name" ]; then
     wget -O "$tmp_name" "$url_bitwarden" || {
-        echo -e "${LIGHTRED}Could not download Bitwarden AppImage${NC}";
+        print_error "Could not download Bitwarden AppImage";
         exit 1;
     }
 else
-    echo -e "${LIGHTYELL}$tmp_name file already exists, re-utilizing from supposedly previously failed installation${NC}"
+    print_warning "$tmp_name file already exists, re-utilizing from supposedly previously failed installation"
 fi
 
-echo -e "${LIGHTBLUE}Installing AppImage into $bin_target${NC}"
+print_info "Installing AppImage into $bin_target"
 cp "$tmp_name" "$bin_target" || {
-    echo -e "${LIGHTRED}Could not install Bitwarden AppImage${NC}";
+    print_error "Could not install Bitwarden AppImage";
     exit 1;
 }
 
@@ -56,10 +70,10 @@ cp "$tmp_name" "$bin_target" || {
     # set correct ownership and permissions
     chown root:root "$bin_target" &&
     chmod 755 "$bin_target" &&
-    echo -e "${LIGHTGREEN}Done${NC}";
+    print_ok "Done";
 } || {
-    echo -e "${LIGHTRED}Could not set correct permissions to $bin_target${NC}";
-    echo -e "${LIGHTRED}Check them manually if you cannot open the program${NC}";
+    print_error "Could not set correct permissions to $bin_target";
+    print_error "Check them manually if you cannot open the program";
     exit 1;
 }
 
@@ -72,19 +86,19 @@ if [ -d "/usr/share/applications" ]; then
         fi
         wget -O "$share_bw_dir/logo.png" "$url_logo" &&
         chmod 444 "$share_bw_dir/logo.png" &&
-        echo -e "${LIGHTBLUE}Installed Bitwarden logo to $share_bw_dir/logo.png${NC}";
+        print_info "Installed Bitwarden logo to $share_bw_dir/logo.png";
     } || {
-        echo -e "${LIGHTYELL}Could not download Bitwarden Logo${NC}";
-        echo -e "${LIGHTYELL}You may download it manually from $url_logo and copy it to $share_bw_dir${NC}";
+        print_warning "Could not download Bitwarden Logo";
+        print_warning "You may download it manually from $url_logo and copy it to $share_bw_dir";
     }
 
     {
         wget -O "$share_apps_dir/bitwarden.desktop" "$url_launcher_app" &&
         chmod 444 "$share_apps_dir/bitwarden.desktop" &&
-        echo -e "${LIGHTBLUE}Installed Bitwarden Launcher Application Template to $share_apps_dir/bitwarden.desktop${NC}";
+        print_info "Installed Bitwarden Launcher Application Template to $share_apps_dir/bitwarden.desktop";
     } || {
-        echo -e "${LIGHTRED}Could not download Bitwarden Launcher Application Template${NC}";
-        echo -e "${LIGHTYELL}You may download it manually from $url_launcher_app and copy it to $share_apps_dir${NC}";
+        print_error "Could not download Bitwarden Launcher Application Template";
+        print_warning "You may download it manually from $url_launcher_app and copy it to $share_apps_dir";
         exit 1
     }
 fi
@@ -92,8 +106,8 @@ fi
 # If all is ok, remove file from /tmp
 {
     rm "$tmp_name" &&
-    echo -e "${LIGHTBLUE}Removed temporary download file $tmp_name${NC}";
-} || echo -e "${LIGHTYELL}Could not remove $tmp_name, you may do so manually${NC}"
+    print_info "Removed temporary download file $tmp_name";
+} || print_warning "Could not remove $tmp_name, you may do so manually"
 
 # Only show this if no errors, otherwise I can't bear the shame.
-echo -e "${LIGHTGREEN}Please star the repo if it was useful for you!${NC}"
+print_ok "Please star the repo if it was useful for you!"
