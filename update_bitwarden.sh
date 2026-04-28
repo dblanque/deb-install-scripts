@@ -45,8 +45,11 @@ if ! [ "$(id -u)" = 0 ]; then
 fi
 
 if [ $(pgrep -c -i "^bitwarden") -ge 1 ]; then
-    print_error "Please close Bitwarden to update it"
-    exit 1
+    print_warning "Closing Bitwarden process"
+    pkill -i "^bitwarden" || {
+        print_error "Please close Bitwarden to update it";
+        exit 18;
+    }
 fi
 
 ### download bitwarden and install as root for all users
