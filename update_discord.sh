@@ -35,8 +35,11 @@ if ! [ "$(id -u)" = 0 ]; then
 fi
 
 if [ $(pgrep -c -i "^discord") -ge 1 ]; then
-    print_error "Please close Discord to update it"
-    exit 18
+    print_warning "Closing discord process"
+    pkill -i "^discord" || {
+        print_error "Please close Discord to update it";
+        exit 18;
+    }
 fi
 
 ### download and install as root
