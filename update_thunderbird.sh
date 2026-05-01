@@ -1,7 +1,7 @@
 #!/bin/bash
 # Author: Dylan Blanque
 # Free to share and modify for anyone
-# 2025-04-16
+# 2026-04-30
 LIGHTGREEN='\033[0;32m'
 LIGHTBLUE='\033[0;34m'
 LIGHTRED='\033[1;31m'
