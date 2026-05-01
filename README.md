@@ -16,6 +16,20 @@ chmod +x ./update_discord.sh
 ./update_discord.sh
 ```
 
+* Thunderbird
+```bash
+wget https://raw.githubusercontent.com/dblanque/deb-install-scripts/refs/heads/main/update_thunderbird.sh
+chmod +x ./update_thunderbird.sh
+./update_thunderbird.sh
+```
+
+* Framework Tool
+```bash
+wget https://raw.githubusercontent.com/dblanque/deb-install-scripts/refs/heads/main/update_framework_tool.sh
+chmod +x ./update_framework_tool.sh
+./update_framework_tool.sh
+```
+
 * Zen Browser (it really just uses the official one checking you're not root)
 ```bash
 wget https://raw.githubusercontent.com/dblanque/deb-install-scripts/refs/heads/main/update_zen.sh
