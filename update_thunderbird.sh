@@ -43,7 +43,10 @@ if ! [ "$(id -u)" = 0 ]; then
     exit $?
 fi
 
+### change directories to tmp
 cd "/tmp"
+
+### close process if required
 if [ $(pgrep -c -i "^thunderbird") -ge 1 ]; then
     print_warning "Closing Thunderbird process"
     pkill -i "^thunderbird" || {

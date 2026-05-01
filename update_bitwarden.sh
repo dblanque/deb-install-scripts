@@ -44,6 +44,7 @@ if ! [ "$(id -u)" = 0 ]; then
     exit $?
 fi
 
+### close process if required
 if [ $(pgrep -c -i "^bitwarden") -ge 1 ]; then
     print_warning "Closing Bitwarden process"
     pkill -i "^bitwarden" || {
