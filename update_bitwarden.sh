@@ -81,7 +81,7 @@ cp "$tmp_name" "$bin_target" || {
 }
 
 # Add KDE Launcher Application
-if [ -d "/usr/share/applications" ]; then
+if [ -d "$share_apps_dir" ]; then
     # Download Bitwarden logo
     {
         if [ ! -d "$share_bw_dir" ]; then
